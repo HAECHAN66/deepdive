@@ -41,4 +41,4 @@ Back-End
 
 이메일
 
-<img src="http://mazandi.herokuapp.com/api?handle={백준닉네임}&theme=warm"/>
+<img src="http://mazandi.herokuapp.com/api?handle={YWC-FE}&theme=cold"/>

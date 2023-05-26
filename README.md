@@ -1,6 +1,6 @@
 # Youth-Welfare
 
-<img src="https://img.shields.io/badge/Youth-blue-Welfare-blue?style=flat-square&logo=&logoColor=white"/>
+<img src="https://img.shields.io/badge/Youth Welfare-blue?style=flat-square&logo=&logoColor=white"/>
 - 관한 정의
 - 제공 설명
 

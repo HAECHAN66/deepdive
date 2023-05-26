@@ -1,6 +1,6 @@
 # Youth-Welfare
 
-<a href = "https://ywc.youthwelfare.kr/"><img src="https://img.shields.io/badge/Youth Welfare-blue?style=flat-square&logo=&logoColor=white"/></a>
+- 프로젝트 사이트 => <a href = "https://ywc.youthwelfare.kr/"><img src="https://img.shields.io/badge/Youth Welfare-blue?style=flat-square&logo=&logoColor=white"/></a>
 
 - 관한 정의
 - 제공 설명

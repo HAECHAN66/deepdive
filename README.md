@@ -1,12 +1,13 @@
 # Youth-Welfare
 
-- 프로젝트 사이트 ->
+<img src="https://img.shields.io/badge/Youth-Welfare-blue?style=flat-square&logo=Internet&logoColor=white"/>
 - 관한 정의
 - 제공 설명
 
 # 개발 기간
 
 -
+<img src="http://mazandi.herokuapp.com/api?handle=nyongone&theme=cold"/>
 
 # 개발 이유
 
@@ -41,5 +42,3 @@ Back-End
 
 이메일
 
-<img src="http://mazandi.herokuapp.com/api?handle=nyongone&theme=cold"/>
-<img src="http://mazandi.herokuapp.com/api?handle=nyongone&theme=cold"/>

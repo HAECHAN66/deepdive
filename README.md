@@ -43,5 +43,5 @@ Back-End
 
 이메일
 
-<img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fseondal&count_bg=%20202020&title_bg=%20202020&icon=github.svg&icon_color=%23F8F8F8&title=hits&edge_flat=true)"/>
+<img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fseondal&count_bg=%20202020&title_bg=%20202020&icon=view.svg&icon_color=%23F8F8F8&title=hits&edge_flat=true)"/>
 

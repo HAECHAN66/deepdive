@@ -9,11 +9,13 @@
 # 개발 기간
 
 -
-<img src="http://mazandi.herokuapp.com/api?handle=nyongone&theme=cold"/>
 
 # 개발 이유
 
  - 문화복지카드 훙냐냐
+
+
+
 
 # 참여 개발자
 
@@ -29,6 +31,8 @@ Back-end Developers
 - notion
 - Figma
 
+
+
 # 적용 기술
 
 Front-End
@@ -36,9 +40,13 @@ Front-End
 Back-End
 <표>
 
+
+
 # 구현 기능 (Front&Back)
 
 표형식, 움짤 필요
+
+
 
 # Contact
 

@@ -43,5 +43,5 @@ Back-End
 
 이메일
 
-[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fgjbae1212%2Fhit-counter&count_bg=%23202020&title_bg=%23202020&icon=apachespark.svg&icon_color=%23FFFFFF&title=SEE&edge_flat=false)](https://ywc.youthwelfare.kr/)
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2Fgjbae1212%2Fhit-counter&count_bg=%23202020&title_bg=%23202020&icon=checkmarx.svg&icon_color=%23F8F8F8&title=hits&edge_flat=true)](https://ywc.youthwelfare.kr/)
 

@@ -42,11 +42,6 @@ Back-End
 
 
 
-# 구현 기능 (Front&Back)
-
-표형식, 움짤 필요
-
-
 
 # Contact
 

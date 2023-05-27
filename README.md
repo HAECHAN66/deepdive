@@ -1,4 +1,4 @@
-![header](https://capsule-render.vercel.app/api?text=Youth-Welfare&animation=fadeIn1.2s&type=transparent)
+![header](https://capsule-render.vercel.app/api?text=Youth-Welfare&animation=scaleIn .8s&type=transparent)
 
 
 - 프로젝트 사이트 => <a href = "https://ywc.youthwelfare.kr/"><img src="https://img.shields.io/badge/Youth Welfare-blue?style=flat-square&logo=&logoColor=white"/></a>

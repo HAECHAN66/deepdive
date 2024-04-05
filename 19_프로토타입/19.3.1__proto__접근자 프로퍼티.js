@@ -110,3 +110,162 @@ const me1 = new Person("Lee");
 
 // me1 객체의 생성자 함수는 Person이다.
 console.log(me.constructor === Person); // true
+
+// 19.4 리터럴 표기법에 의해 생성된 객체의 생성자 함수와 프로토타입
+// obj 객체를 생성한 생성자 함수는 Object다.
+const obj = new Object();
+console.log(obj.constructor === Object); // true
+
+// add 함수 객체를 생성한 생성자 함수는 Function이다.
+const add = new Function("a", "b", "return a + b");
+console.log(add.constructor === Function); // true
+
+// 생성자 함수
+function Person(name) {
+  this.name = name;
+}
+// me 객체를 생성한 생성자 함수는 Person이다.
+const me2 = new Person("Lee");
+console.log(me2.constructor === Person);
+
+// 명시적으로 new 연산자와 함께 인스턴스를 생성X 객체 생성방식
+// 객체 리터럴
+const obj = {};
+
+// 함수 리터럴
+const add2 = function (a, b) {
+  return a + b;
+};
+
+// 배열 리터럴
+const arr = [1, 2, 3];
+
+// 정규 표현식 리터럴
+const regexp = /is/gi; // 이게 뭥미?
+
+// obj 객체는 Object 셍성자 함수로 생성한 객체가 아니라 객체 리터럴로 생성
+const obj = {};
+
+// 하지만 obj 객체의 생성자 함수는 Object 생성자 함수다.
+console.log(obj.constructor === Object);
+
+/* 추상연산
+ECMASctipt 사양에서 내부 동작의 구현 알고리즘을 표현힌 것이다.
+ECMASctipt 사양에서 설명을 위해 사용되는 함수와 유사한 의사코드라 이해
+*/
+
+// 2. Object 생성자 함수에 의한 객체 생성
+// 인수가 전달되지 않았을 떄 추상 연산
+let obj = new Object();
+console.log(obj); // {}
+
+// 1. new.target이 undefined나 Object가 아닌 경우
+// 인스턴스 -> Foo.protorype -> Object.prototype 순으로 프로토타입 체인이 생성
+class Foo extends Object {}
+new Foo(); // Foo{}
+
+// 3. 인수가 전달된 경우에는 인수를 객체로 변환
+// Number 객체생성
+obj = new Object(123);
+console.log(obj); // Number {123}
+
+// String 객체 생성
+obj = new Object("123");
+console.log(obj); // String {"123"}
+
+// foo 함수는 Function 생성자 함수로 생성한 함수 객체가 아니라 함수 선언문으로 생성
+function foo() {}
+// 하지만 constructor 프로퍼티를 통해 확인해보면 foo의 생성자 함수는 Function 생성자 함수이다.
+console.log(foo.constructor === Function); // true
+/* 프로토타입과 생성자 함수는 단독으로 존재할 수 없고 언제나 쌍으로 존재
+ 프로토타입의 생성시점
+ 프로토타입은 생성자 함수가 생성되는 시점에 더불어 생성
+ 사용자 정의 생성자 함수와 프로토타입 생성시점
+ 생성자 함수로서 호출할 수 있는 함수,
+ 즉 constructor는 함수 정의가 평가되어 함수 객체를 생성하는
+ 시점에 프로토타입도 더불어 생성
+ 
+ 함수정의(constructo)가 평가되어 함수 객체를 생성하는 시점에 프로토타입도 더불어 생성*/
+console.log(Preson.prototype);
+
+// 생성자 함수
+function Person(name) {
+  this.name = name;
+}
+
+// 화살표 함수는 non-constructor이다.
+const Person = (name) => {
+  this.name = name;
+};
+// non-constructor은 프로토타입이 생성 되지 않는다.
+console.log(Person.prototype);
+
+// 객체가 생성되기 이전에 생성자 함수와 프로토타입은 이미 객체화되어 존재한다.
+// 이후 생성자 함수 또는 리터럴표기법으로 객체를 생성하면
+// 프로토타입은 생성된 객체의 [[Prototype]] 내부 슬롯에 할당된다.
+
+// 객체 생성 방식과 프로토타입의 결정
+<table>
+  <caption> 객체 생성 방법 </caption>
+  <tr>
+    <td>객체리터럴</td>
+  </tr>
+  <tr>
+    <td>Object 생성자 함수</td>
+  </tr>
+  <tr>
+    <td>생성자 함수</td>
+  </tr>
+  <tr>
+    <td>Object.create 메서드</td>
+  </tr>
+  <tr>
+    <td>클래스(ES6)</td>
+  </tr>
+</table>;
+
+// 객체 리터럴에 의해 생성된 객체의 프로토타입 _평가하여 생성할 때 OrdinaryObjectCtrate
+const obj = { x: 1 };
+
+// obj는 Object.prototype을 상속 받는다.
+console.log(obj.constructor === Object); // true
+console.log(obj.hasOwnProperty("x")); // true
+
+// Object 생성자 함수에 의해 생성된 객체의 프로토타입 _ 생성자 함수를 인수 없이 호출하면 빈객체 생성.
+const obj = new Object();
+obj.x = 1; // 위에 것과 같이 상속받게 된다
+
+console.log(obj.constructor === Object); // true
+console.log(obj.hasOwnProperty("x")); // true
+
+// 생성자 함수에 의해 생성된 객체의 프로토타입_new연산자와 함께 호출 인스턴스를 생성하면 추상연산자가 호출된다
+// 이때 추상연산에 전달되는 프로토타입은 생성함수의 prototype 프로퍼티에 바인딩되어 있는 객체.
+function Person(name) {
+  this.name = name;
+}
+const me3 = new Person("Lee");
+// Person.prototype에 프로퍼티를 추가하여 자식 객체가 생속 받을 수 있도록 구현
+// 프로토타입 메서드
+Person.prototype.sayHello = function () {
+  console.log(`Hi! My name is ${this.name}`);
+};
+
+const me4 = new Person("Lee Juyean");
+const you = new Person("Lee Hyein");
+
+me4.sayHello();
+you.sayHello();
+
+function Love(we) {
+  this.we = we;
+}
+
+const we2 = new Love("주연");
+
+Love.prototype.sayLike = function () {
+  console.log(`안녕! 나는 ${this.we}이를 사랑해!`);
+};
+
+const je = new Love("주연");
+
+je.sayLike();

@@ -158,17 +158,108 @@ parseInt("10", 16);
 const x2 = 15;
 // 10진수 15를 2진수로 해석하고 그 결과를 문자열로 변환
 x2.toString(2);
-
+// 문자열 '1111'을 2진수로 해석하고 그 결과를 10진수 정수로 반환
 parseInt(x2.toString(2), 2);
 // 10진수 15를 8진수로 해석하고 그 결과를 문자열로 변환
 x2.toString(8);
-
+// 문자열 '17'을 8진수로 해석하고 그 결과를 10진수 정수로 반환
 parseInt(x2.toString(8), 8);
 // 10진수 15를 16진수로 해석하고 그 결과를 문자열로 변환
 x2.toString(16);
-
+// 문자열 'f'을 16진수로 해석하고 그 결과를 10진수 정수로 반환
 parseInt(x2.toString(16), 16);
-
+// 숫자값을 문자열로 변환
 x2.toString();
 // 문자열 '15'를 10진수로 해석하고 그 결과를 10진수 정수로 변환
 parseInt(x2.toString());
+
+// 16진수 리터럴 '0xf'를 16진수로 해석하고 10진수 정수로 그 결과를 반환
+parseInt("0xf");
+// 위 코드와 같다.
+parseInt("f", 16);
+
+// 2진수 리터럴과 8진수 리터럴은 제대로 해석하지 못한다. 0 이후가 무시된다.
+parseInt("0b10");
+// 8진수 리터럴은 제대로 해석하지 못한다. 0이후가 무시된다.
+parseInt("0o10");
+
+// 8 진수로 해석하려면 지수를 반드시 지정해야한다.
+parseInt("10", 2);
+parseInt("10", 8);
+
+// 문자열의 첫 번쨰가 문자가 해당 지수의 숫자로 변환될 수 없다면 NaN을 반환한다
+parseInt("A0"); // NaN
+parseInt("20", 2); // 8
+
+// 두 번째 문자부터 해당 진수를 나타내는 숫자가 아닌 문자와 이
+// 마주치면 이 문자들은 전부 무시되면 해석된 정수값만 반환
+// 10진수로 해석할 수 없는 'A' 이후의 문자는 모두 무시된다.
+parseInt("1A0"); // 1
+// 2진수로 해석할 수 없는 '2' 이후의 문자는 모두 무시된다.
+parseInt("102", 2); // 2
+// 8진수로 해석할 수 없는 '8' 이후의 문자는 모두 무시된다.
+parseInt("58", 8); // 5
+// 16진수로 해석할 수 없는 'G' 이후의 문자는 모두 무시된다.
+parseInt("FG", 16); // 15
+
+// 문자열에 공백이 있다면 첫 번째 문자열만 해석하여 반환하며
+// 앞뒤 공백은 무시된다. 만일, 첫번째 문자열로 해석할 수 없는 경우 NaN을 반환
+parseInt("34 45 66"); // 34
+parseInt("40 years"); // 40
+// 첫 번째 문자열을 숫자를 변환 할 수 없다면 NaN 반환
+parseInt("He was 40"); // NaN
+// 앞뒤 고백은 무시
+parseInt(" 60 "); // 60
+
+// 21-35
+const uri = "https://pin.it/55OGVv8rA";
+// `=,?,&`은 인코딩한다.
+let enc = edcodeURIComponent(uriComp);
+console.log(enc);
+
+let dec = edcodeURIComponent(enc);
+console.log(dec);
+
+// edcodeURI은 `=,?,&`은 인코딩X
+enc = edcodeURI(uriComp);
+console.log(enc);
+
+dec = edcodeURI(enc);
+console.log(dec);
+
+// 예제 21-38
+// 전역 변수 x는 호이스팅이 발생한다
+console.log(x); // undefined
+// 전역 변수가 아니라 단지 전역 객체의 프로퍼티인 y는 호이스팅이 발생X
+console.log(y);
+
+var x3 = 10;
+
+function foo() {
+  // 선언하지 않은 식별자에 값을 할당
+  y = 20;
+}
+foo();
+
+// 선언하지 않은 식별자 y를 전역에서 참조할 수 있다.
+console.log(x + y); // 30
+
+// 전역 변수는 프로퍼티이지만 delete 연산자로 삭제할 수 없다.
+var x4 = 10; // 전역 변수
+
+function foo() {
+  // 선언하지 않은 식별자에 값을 할당
+  y = 20; // window.y = 20;
+  console.log(x + y);
+}
+
+foo(); // 30
+
+console.log(window.x); // 10
+console.log(window.y); // 20
+
+delete x; // 전역 변수는 삭제되지 않는다.
+delete y; // 프로퍼티는 삭제된다.
+
+console.log(window.x); // 10
+console.log(window.y); // undefined

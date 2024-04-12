@@ -81,3 +81,94 @@ function foo() {
 
 foo();
 console.log(x1); // 1
+
+// 예제 21-20
+// 인수가 유한수이면 true를 반환한다.
+isFinite(0); // -> true
+isFinite(2e64); // -> true
+isFinite("10"); // -> true: '10' -> 10
+isFinite(null); // -> true: null -> 0
+
+// 인수가 무한수 또는 NaN으로 평가되는 값이라면 false반환
+isFinite(Infinity); // -> false
+isFinite(-Infinity); // -> false
+isFinite(NaN); // -> false
+isFinite("Hello"); // -> false
+isFinite("2005/12/12"); // -> false
+
+// 예제 21-22
+// 숫자
+isNaN(NaN);
+isNaN(10);
+
+// 문자열
+isNaN("boolean");
+isNaN("10");
+isNaN("10", "12");
+isNaN("");
+isNaN(` `);
+
+// 불리언
+isNaN(true);
+isNaN(null);
+
+// undefined
+isNaN(undefined);
+
+// 객체
+isNaN({});
+
+// date
+isNaN(new Date());
+isNaN(new Date().toString());
+
+// 예제 21-23
+// 문자열을 실수로 해석하여 반환한다.
+parseFloat("3.14");
+parseFloat("10.00");
+
+// 공백으로 구분된 문자열은 첫 번째 문자열만 변환한다.
+parseFloat("34 45 66");
+parseFloat("40 years");
+
+// 첫 번째 문자열을 숫자로 변환할 수 없다면 NaN을 반환한다.
+parseFloat("He was 40");
+
+// 앞뒤 공백은 무시된다.
+parseFloat(" 60 ");
+
+// 예제 21-24
+// 문자열을 정수로 해석하여 반환한다.
+parseInt("10");
+parseInt("10.123");
+
+// 전달받은 인수가 문자열이 아니면 문자열로 변환한 다음 정수로 해석
+parseInt(10);
+parseInt(10.123);
+
+// 10`을 10진수로 해석하고 그 결과를 10진수 정수로 변환
+parseInt("10");
+// 10`을 2진수로 해석하고 그 결과를 10진수 정수로 변환
+parseInt("10", 2);
+// 10`을 8진수로 해석하고 그 결과를 10진수 정수로 변환
+parseInt("10", 8);
+// 10`을 16진수로 해석하고 그 결과를 10진수 정수로 변환
+parseInt("10", 16);
+
+const x2 = 15;
+// 10진수 15를 2진수로 해석하고 그 결과를 문자열로 변환
+x2.toString(2);
+
+parseInt(x2.toString(2), 2);
+// 10진수 15를 8진수로 해석하고 그 결과를 문자열로 변환
+x2.toString(8);
+
+parseInt(x2.toString(8), 8);
+// 10진수 15를 16진수로 해석하고 그 결과를 문자열로 변환
+x2.toString(16);
+
+parseInt(x2.toString(16), 16);
+
+x2.toString();
+// 문자열 '15'를 10진수로 해석하고 그 결과를 10진수 정수로 변환
+parseInt(x2.toString());

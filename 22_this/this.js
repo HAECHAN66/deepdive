@@ -109,3 +109,133 @@ function foo() {
     bar();
 }
 foo();
+
+
+
+// 예제 22-09
+// var 키워드로 선언한 전역 변수 value는 전역 객체의 프로퍼티이다.
+var value = 1;
+// const 키워드로 선언한 전역 변수 value는 전역 객체의 프로퍼티가 아니다.
+// const value = 1;
+
+const obj1 = {
+    value: 100,
+    foo () {
+        console.log("이마요시는 :", this); //{ value: 100, foo: [Function: foo] }
+        console.log("이마요시는 :", this.value); // 100
+
+        // 메서드 내에서 정의한 중첩 함수
+        function bar() {
+            console.log("이마요시는 :", this); // window
+            console.log("이마요시는 :", this.value); // 1
+        }
+        
+    // 메서드 내에서 정의한 중첨 함수도 일반함수로 호출되면 중첩 함수 내부의 this에는
+    // 전역 객체가 바인딩
+    bar();
+    }
+};
+
+obj1.foo();
+
+// 예제 22-10
+// 콜백함수가 일반함수로 호출된다면 콜백함수 내부의 this에도 전역객체가 바인딩 된다.
+var value = 1;
+
+const obj2 = {
+    value: 100,
+    foo() {
+        console.log("이마요시는 :", this); // { value: 100, foo: [Function: foo] }
+        // 콜백 함수 내부의 this에는 전역 객체가 바인딩 된다.
+        setTimeout(function(){
+            console.log("이마요시는 :", this); // window
+            console.log("이마요시는 :", this.value); // 1
+        }, 100);
+    }
+};
+
+obj2.foo();
+
+// 예제 22-11
+var value = 1;
+
+const obj3 = {
+    value: 100,
+    foo() {
+        //  this 바인딩(obj)을 변수 that에 할당한다.
+        const that = this;
+
+        // 콜백 함수 내부에서 this대신 that을 참조한다.
+        setTimeout(function() {
+            console.log(that.value); // 100
+        }, 100);
+    }
+};
+
+obj3.foo();
+
+// 예제 22-12
+var value = 1;
+
+const obj4 = {
+    value: 100,
+    foo() {
+        // 콜백 함수에 명시적으로 this를 바인딩한다.
+        setTimeout(function() {
+            console.log(that.value); // 100
+        }.bind(this), 100);
+    }
+};
+
+obj4.foo();
+
+
+// 예제 22-14
+const person1 = {
+    name : '이마요시',
+    getName() {
+        return this.name;
+    }
+};
+
+// 메서드 getName을 호출한 객체는 person이다.
+console.log(person.getName()); // 이마요시
+
+
+// 예제 22-15
+const anotherPerson = {
+    name: '쿠로코'
+};
+// getName 메서드를 위 객체의 메서드로 할당
+anotherPerson.getName = person.getName;
+
+// getName 메서드를 호출한 객체는 위이다.
+console.log(anotherPerson.getName()); // 쿠로코
+
+// getName 메서드를 변수에 할당
+const getName = person.getName;
+
+// getName 메서드를 일반 함수로 호출
+console.log(getName()); // ' '
+// 일반 함수로 호출된 getName 함수의 내부 this.name은 브라우저 환경에서 window.name과 같다.
+// node.js 환경에서 this.name은 undefined 이다.
+
+
+// 예제 22-16
+function Person(name) {
+    this.name = name;
+}
+
+Person.prototype.getName = function () {
+    return this.name;
+};
+
+const me1 = new Person('쿠로코');
+
+// getName 메서드를 호출한 객체는 me1다.
+console.log(me1.getName()); // 쿠로코
+
+Person.prototype.name = '카가미';
+
+// getName 메서드를 호출한 객체는 Person.prototype
+console.log(Person.prototype.getName()); // 카가미

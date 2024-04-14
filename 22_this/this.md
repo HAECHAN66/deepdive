@@ -86,3 +86,97 @@ setTimeout 함수에 대해서는 41장 "타이머"에서 자세히 살펴볼것
 - 메서드는 객체에 포함된 것이 아니라 독립적으로 존재하는 별도의 객체다.
 - 메서드 내부의 `this`는 자신을 호출한 객체를 가리킨다. this에 바인딩 될 객체는 호출 시점에 결정된다.
 - 프로토타입 메서드 내부에서 사용된 `this`도 일반 메서드와 마찬가지로 해당 메서드를 호출한 객체에 바인딩.
+
+### 생성자 함수 호출
+
+> 생성자 함수 내부의 this에는 생성자 함수가 (미래에) 생성할 인스턴스가 바인딩 된다.
+> `apply`,`call`,`bind` 메서드는 `Function.prototype`의 메서드다. 즉, 이들 메서드는 모든 함수가 상속받아 사용 가능.
+
+```jsx
+// 주어진 this 바인딩과 인수 리스트 배열을 사용하여 함수를 호출
+// apply와 call 메서드 사용법
+
+@param thisArg - this로 사용할 객체
+@param argsArray - 함수에게 전달할 인수 리스트의 배열 또는 유사 배열 객체
+@retruns 호출된 함수의 반환 값
+
+Function.prototype.apply(thisArg[, argsArray])
+
+// 주어진 this 바인딩과 , 로 구분된 인수 리스트를 사용하여 함수 호출
+@param thisArg - this로 사용할 객체
+@param arg1, arg2, ... - 함수에게 전달할 인수 리스트
+@retruns 호출된 함수의 반환값
+
+Function.prototype.call (thisArg[, arg1[, arg2, [, ...]]])
+```
+
+- `apply`와 `call`메서드의 본질적인 기능은 함수를 호출하는 것이다.
+- 위 대표 용도 `arguments` 객체와 같은 유사 배열 객체에 배열 메서드를 사용 하는 경우
+  - Array.prototype.slice.call를 인수 없이 호출하면 배열의 복사본 생성.
+- 메서드의 this와 메서드 내부의 중첩 함수 또는 콜백 함수의 this가 불일치 하는 문제를 해결
+
+<details>
+<summary>apply</summary>
+apply 메서드는 호출할 함수의 인수를 배열로 묶어 전달
+</details>
+
+<details>
+<summary>call</summary>
+call 메서드는 호출할 함수의 인수를 쉼표로 구분한 리스트 형식으로 전달
+</details>
+
+<details>
+<summary>Function.prototype.bind</summary>
+`apply`와 `call`메서드와 달리 함수를 호출하지 않는다.
+다만 첫 번째 인수로 전달한 this 바인딩이 교체된 함수를 새롭게 생성해 반환.
+bind 메서드는 함수를 호출하지는 않으므로 명시적으로 호출.
+
+콜백함수 내부의 this외부 함수의 this와 일치시키는 방법 = bind 메서드를 사용하기
+
+- 메서드의 this와 메서드 내부의 중첩 함수 또는 콜백 함수의 this가 불일치 하는 문제를 해결
+</details>
+
+```jsx
+// 예제 22-23
+const person2 = {
+  name: "카가미",
+  foo(callback) {
+    // 1 = 호출되기 이전 person 객체를 가리킴
+    setTimeout(callback, 100);
+  },
+};
+
+person.foo(function () {
+  console.log(`${this.name}상 전 처음부터 여기 있었는데요.`); // 2 = 콜백 호출함. 전역 객체를 가리킴
+  /*
+    일반 함수로 호출된 콜백 함수 내부의 this.name은 브라우저 환경에서 window.name 과 같음
+    브라우저 환경에서 window.name은 창의 이름을 나타내는 빌트인 프로퍼티이며 기본값은 ``이다.
+    node.js 환경에서 this.name은 undefined임...
+    */
+});
+
+// 예제 22-24
+// 콜백함수 내부의 this외부 함수의 this와 일치시키는 방법 = bind 메서드를 사용하기
+const person3 = {
+  name: "카가미",
+  foo(callback) {
+    // bind 메서드로 callback 함수 내부의 this 바인딩을 전달
+    setTimeout(callback.bind(this), 100);
+  },
+};
+
+person.foo(function () {
+  console.log(`${this.name}상 전 처음부터 여기 있었는데요.`); // 2 = 콜백 호출함. 전역 객체를 가리킴
+});
+```
+
+### 정리
+
+> 지금까지 함수 호출 방식에 따라 `this 바인딩`이 동적으로 결정되는 것에 대해 살펴보았다.
+
+| 함수 호출 방식                                             | this 바인딩                                                            |
+| ---------------------------------------------------------- | ---------------------------------------------------------------------- |
+| 일반 함수 호출                                             | 전역 객체                                                              |
+| 메서드 호출                                                | 메서드를 호출한 객체                                                   |
+| 생성자 함수 호출                                           | 생성자가 (미래에) 생성할 인스턴스                                      |
+| Function.prototype.apply/call/bind 메서드에 의한 간접 호출 | Function.prototype.apply/call/bind 메서드에 첫 번째 인수로 전달한 객체 |

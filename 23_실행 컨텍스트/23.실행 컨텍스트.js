@@ -34,3 +34,32 @@ function foo() {
   bar();
 }
 foo(); // 6
+
+// 예제 23-04
+var x2 = 1;
+const y1 = 2;
+
+function foo(a) {
+  var x2 = 3;
+  const y1 = 4;
+
+  function bar(b) {
+    const z = 5;
+    console.log(a + b + x2 + y1 + z);
+  }
+  bar(10);
+}
+foo(20); //42
+
+// Object.prototype.toString
+window.toString();
+window.__proto__.__proto__.__proto__ === Object.prototype;
+
+// 예제 23-11
+let x3 = 1;
+
+if (true) {
+  let x3 = 10;
+  console.log(x3); // 10
+}
+console.log(x3); // 1

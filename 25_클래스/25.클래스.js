@@ -223,3 +223,37 @@ class Person {
     console.log(`gg`);
   }
 }
+
+// 예제 25-29
+class Square {
+  // 정적 메서드
+  static area(width, height) {
+    return width * height;
+  }
+}
+
+console.log(Square.area(10, 10)); // 100
+
+// 예제 25-30
+class Square {
+  constructor(width, height) {
+    this.width = width;
+    this.height = height;
+  }
+  // 프로토타입 메서드
+  area() {
+    return this.width * this.height;
+  }
+}
+
+const square = new Square(10, 10);
+console.log(square.area()); // 100
+// 22.2절 "함수 호출 방식과 this바인딩"
+
+// 예제 25-31
+// 표준 빌트인 객체의 정적 메서드
+Math.max(1, 2, 3);
+Number.isNaN(NaN);
+JSON.stringify({ a: 1 });
+Object.is({}, {});
+Reflect.has({ a: 1 }, "a");

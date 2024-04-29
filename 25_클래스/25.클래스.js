@@ -257,3 +257,278 @@ Number.isNaN(NaN);
 JSON.stringify({ a: 1 });
 Object.is({}, {});
 Reflect.has({ a: 1 }, "a");
+
+// 예제 25-34
+class Person {
+  constructor(name) {
+    // 인스턴스 프로퍼티
+    this.name = name; // name프로퍼티는 public이다.
+  }
+}
+const me = new Person("이주연");
+
+// name은 public이다.
+console.log(me.name);
+
+// 예제 25-35
+const person = {
+  // 데이터 프로퍼티
+  firstName: "주연",
+  lastname: "이",
+
+  // fullName은 접근자 함수로 구성된 접근자 프로퍼티다.
+  // getter함수
+  get fullName() {
+    return `${this.firstName} ${this.lastname}`;
+  },
+  // setter함수
+  // 배열 디스트럭처링 할당 <36장>
+  set fullName(name) {
+    [this.firstName, this.lastname] = name.split("");
+  },
+};
+
+// 데이터 프로퍼티를 통한 프로퍼티 값의 참조
+console.log(`${person.firstName} ${person.lastname}`); // 주연 이
+
+// 접근자 프로퍼티를 통한 프로퍼티의 값의 저장
+// 접근자 프로퍼티 fullName에 값을 저장하면 setter함수가 호출
+person.fullName = "이 주연♥";
+console.log(person);
+
+// 접근자 프로퍼티를 통한 프로퍼티의 값의 참조
+// 접근자 프로퍼티 fullName에 접근하면 getter함수 호출
+console.log(person.fullName);
+
+// fullName은 접근자 프로퍼티다
+// 접근자 프로퍼티는 get, set, enumerable, configurable 프로퍼티 어트리뷰트를 갖는다.
+console.log(Object.getOwnPropertyDescriptor(person, "fullName"));
+/*
+{
+  get: [Function: get fullName],
+  set: [Function: set fullName],
+  enumerable: true,
+  configurable: true
+}
+ */
+
+// 위 예제의 객체 리터럴을 클래스로 표현
+// 예제 25-36
+class Person {
+  constructor(firstName, lastname) {
+    this.firstName = firstName;
+    this.lastname = lastname;
+  }
+
+  // fullName은 접근자 함수로 구성된 접근자 프로퍼티다.
+  // getter
+  get fullName() {
+    return `${this.firstName} ${this.lastname}`;
+  }
+  // setter
+  set fullName(name) {
+    [this.firstName, this.lastname] = name.slice("");
+  }
+}
+
+const me = new Person("주연", "이");
+
+// 데이터 프로퍼티를 통한 프로퍼티 값의 참조.
+console.log(`${me.firstName} ${me.lastname}`);
+me.fullName = "이주연";
+console.log(me);
+console.log(me.fullName);
+console.log(Object.getOwnPropertyDescriptor(Person.prototype, "fullname"));
+
+// 예제 25-39
+class Person {
+  // 클래스 필드 정의
+  name = "Lee";
+}
+const me = new Person("Lee");
+
+// 예제 25-40
+class Person {
+  name = "Lee";
+}
+const me = new Person();
+console.log(me); // Person { name: 'Lee' }
+
+// 예제 25-44
+class Person {
+  name;
+
+  constructor(name) {
+    // 클래스 필드 초기화
+    this.name;
+  }
+}
+const me = new Person("이주연새꺄!");
+console.log(me);
+
+// 예제 25-46
+class Person {
+  // 클래스 필드에 문자열을 할당
+  name = "아";
+
+  // 클래스 필드에 함수를 할당
+  getName = function () {
+    return this.name;
+  };
+  // 화살표 함수로 정의할 수도 있다.
+  // getName = () => this.name;
+}
+const me = new Person();
+console.log(me); // Person { name: '아', getName: [Function: getName] }
+console.log(me.getName); // [Function: getName]
+
+// 예제 25-48
+class Person {
+  constructor(name) {
+    this.name = name; // 인스턴스 프로퍼티는 기본적으로 public
+  }
+}
+const me = new Person("뀨");
+console.log(me.name); // 뀨
+
+// 예제 25-49
+class Person {
+  name = "뀨"; // 클래스 필드도 기본적으로 public
+}
+// 인스턴스 생성
+const me = new Person();
+console.log(me.name); // 뀨
+
+// 예제 25-50
+class Person {
+  // private 필드 정의
+  #name = "";
+
+  constructor(name) {
+    // private 참조
+    this.#name = name;
+  }
+}
+const me = new Person("아");
+
+// private 필드 #name은 클래스 외부에서 참조할 수 있다.
+console.log(me.#name);
+// SyntaxError
+
+// 예제 25-51
+class Person {
+  // private 필드 정의
+  #name = "";
+
+  constructor(name) {
+    this.name = name;
+  }
+
+  // name은 접근자 프로퍼티다
+  get name() {
+    // private필드를 참조하여 trim한 다음 반환
+    return this.#name.trim();
+  }
+}
+const me = new Person("그만");
+console.log(me.name);
+
+// 예제 25-53
+class MyMath {
+  // static public 필드 정의
+  static PI = 22 / 7;
+
+  // static private 필드 정의
+  static #num = 10;
+
+  // static 메서드
+  static incremnet() {
+    return ++MyMath.#num;
+  }
+}
+console.log(MyMath.PI); // 3.142857142857143
+console.log(MyMath.incremnet()); // 11
+
+// 예제 25-54
+class Animal {
+  constructor(age, weight) {
+    this.age = age;
+    this.weight = weight;
+  }
+  eat() {
+    return "eat";
+  }
+  move() {
+    return "move";
+  }
+}
+
+// 상속을 통해 Animal 클래스를 확장한 Bird 클래스를 구현
+class Bird extends Animal {
+  fly() {
+    return "fly";
+  }
+}
+
+const bird = new Bird(1, 5);
+
+console.log(bird); // Bird { age: 1, weight: 5 }
+console.log(bird instanceof Bird);
+console.log(bird instanceof Animal);
+console.log(bird.eat());
+console.log(bird.move());
+console.log(bird.fly());
+
+/*
+true
+true
+eat
+move
+fly
+*/
+
+// 예제 25-57
+// 생성자 함수
+function Base(a) {
+  this.a = a;
+}
+// 생성자 함수를 상속받는 서브 클래스
+class Derived extends Base {}
+
+const derived = new Derived(1);
+console.log(derived); // Derived { a: 1 }
+
+// 예제 25-58
+function Base1() {
+  class Base2 {}
+  let condition = true;
+
+  // 조건에 따라 동적로 상속 대상을 결정하는 서브 클래스
+  class Derived extends (condition ? Base1 : Base2) {}
+  console.log(derived);
+
+  console.log(derived instanceof Base1); // true
+  console.log(derived instanceof Base2); // false
+}
+
+// 예제 25-61
+// 수퍼클래스
+class Base {}
+// 서브클래스
+class Derived extends Base {}
+// 암묵적으로 constructor 생성
+
+// 예제 25-62
+// 수퍼클래스
+class Base {
+  constructor() {}
+}
+// 서브클래스
+class Derived extends Base {
+  constructor(...args) {
+    super(...args);
+  }
+}
+
+const derived1 = new Derived();
+console.log(derived1); // Derived {}

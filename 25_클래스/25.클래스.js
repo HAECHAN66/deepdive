@@ -532,3 +532,59 @@ class Derived extends Base {
 
 const derived1 = new Derived();
 console.log(derived1); // Derived {}
+
+// 예제 25-63
+// 수퍼클래스
+class Base {
+  constructor(a, b) {
+    this.a = a;
+    this.b = b;
+  }
+}
+// 서브클래스
+class Derived extends Base {
+  // 암묵적으로 constructor 정의
+  // constructor(...args) {super(...args);
+}
+
+const derived2 = new Derived(1, 2);
+console.log(derived2); // Derived { a: 1, b: 2 }
+
+// 예제 25-64
+class Base {
+  constructor(a, b) {
+    // 4
+    this.a = a;
+    this.b = b;
+  }
+}
+
+class Derived extends Base {
+  constructor(a, b, c) {
+    //2
+    super(a, b); // 3
+    this.c = c;
+  }
+}
+const derived3 = new Derived(1, 2, 3); // 1
+console.log(derived3); // Derived { a: 1, b: 2, c: 3 }
+
+// 예제 25-68
+
+class Base {
+  constructor(name) {
+    this.name = name;
+  }
+  sayHi() {
+    return `반가웧 난${this.name}이얗! `;
+  }
+}
+
+class Derived extends Base {
+  sayHi() {
+    // super.sayHi는 수퍼클래스의 프로토타입 메서드를 가리킨다.
+    return `${super.sayHi()}혜인아 사랑해. 결혼하자.`;
+  }
+}
+const derived4 = new Derived("주연");
+console.log(derived4.sayHi()); // 반가웧 난주연이얗! 혜인아 사랑해. 결혼하자.

@@ -588,3 +588,104 @@ class Derived extends Base {
 }
 const derived4 = new Derived("주연");
 console.log(derived4.sayHi()); // 반가웧 난주연이얗! 혜인아 사랑해. 결혼하자.
+
+// 예제 25-69
+// 수퍼클래스
+class Base {
+  constructor(name) {
+    this.name = name;
+  }
+  sayHi() {
+    return `반가웧 난${this.name}이얗! `;
+  }
+}
+
+class Derived extends Base {
+  sayHi() {
+    // __super는 Base.prototype을 가리킨다.
+    const __super = Object.getPrototypeOf(Derived.prototype);
+    return `${__super.sayHi.call(this)} 우아앙~ 우히히!`;
+  }
+}
+
+// 예제 25-72
+const base = {
+  name: "주연",
+  sayHi() {
+    return `안녕! ${this.name}아! `;
+  },
+};
+
+const derived5 = {
+  __proto__: base,
+  sayHi() {
+    return `${super.sayHi} 머해?ㅎㅎ`;
+  },
+};
+
+console.log(derived5.sayHi()); // sayHi() { return `안녕! ${this.name}아! `;} 머해?ㅎㅎ
+
+// 예제 25-73
+// 수퍼클래스
+class Base {
+  static sayHi() {
+    return `ㅎㅇ`;
+  }
+}
+// 서브클래스
+class Derived extends Base {
+  static sayHi() {
+    return `${super.sayHi} 뭐하냐`;
+  }
+}
+console.log(Derived.sayHi()); // sayHi() { return `ㅎㅇ`;} 뭐하냐
+
+// 예제 25-80
+// Array 생성자 함수를 상속받아 확장한 MyArray
+class MyArray extends Array {
+  // 중복된 배열 요소를 제거하고 반환한다 : [1,1,2,3] => [1,2,3]
+  uniq() {
+    return this.filter((v, i, self) => self.indexOf(v) === i);
+  }
+
+  // 모든 배열 요소의 평균을 구한다: [1,2,3] =>2
+  average() {
+    return this.reduce((pre, cur) => pre + cur, 0) / this.length;
+  }
+}
+
+const myArray = new MyArray(1, 1, 2, 3);
+console.log(myArray); // MyArray(3) [ 1, 2, 3 ]
+
+// MyArray.prototype.uniq 호출
+console.log(myArray.uniq()); // MyArray(4) [ 1, 1, 2, 3 ]
+// MyArray.prototype.average 호출
+console.log(myArray.average()); // 1.75
+
+// 예제 25-83
+// Array생성자 함수를 상속받아 확장한 MyArray
+class MyArray extends Array {
+  // 모든 메서드가 Array 타입의 인스턴스를 반환하도록 한다.
+  static get [Symbol.species]() {
+    return Array;
+  }
+
+  // 중복된 배열 요소를 제거하고 반환한다 : [1,1,2,3] => [1,2,3]
+  uniq() {
+    return this.filter((v, i, self) => self.indexOf(v) === i);
+  }
+
+  // 모든 배열 요소의 평균을 구한다 : [1,2,3] =>
+  average() {
+    return this.reduce((pre, cur) => pre + cur, 0) / this.length;
+  }
+}
+
+const myArray1 = new MyArray(1, 1, 2, 3);
+
+console.log(myArray1.uniq() instanceof MyArray); // false
+console.log(myArray1.uniq() instanceof Array); // true
+
+// 메서드 체이닝
+// uniq 메서드는 Array 인스턴스를 반환하므로 average 메서드를 호출할 수 없다.
+console.log(myArray1.uniq().average()); // TypeError

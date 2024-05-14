@@ -1,0 +1,60 @@
+// 변수 + 선언 가능
+@font-size: 16px;
+@color: red;
+
+div {
+  font-size: @font-size;
+  color: @color;
+}
+
+// 가져오기 : 다른 scss 파일을 가져오기
+@import "_form";
+@import "_button";
+
+// 중첩 : 가독성
+.card {
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 16px;
+  .card-header {
+    padding: 8px;
+    background-color: lightgray;
+  }
+}
+
+// 재사용
+.btn {
+  width: 100px;
+  height: 50px;
+}
+.btn-danger {
+  .btn;
+  background-color: red;
+}
+
+// 연산
+@base-color: #336699;
+.lighter-color {
+  background-color: lighten(@base-color, 20%); // lighten 색상값 더 밝게
+}
+// 컴파일 후
+.lighter-color {
+  background-attachment: #6699cc;
+}
+
+// 조건문 if만 사용
+@condition: false;
+.selector {
+  // condition이 true면 red, false면 blue
+  color: if(@condition, red, blue);
+}
+
+// 반복문
+.generatr-margins(@index) when (@index < 6) {
+    .mt@{index}{
+        margin-top: @index * 1px;
+    }
+    .generatr-margins(@index + 1);
+}
+
+// https://lesscss.org

@@ -1,0 +1,107 @@
+// 변수 + 선언 가능
+$font-size: 16px;
+$color: red;
+
+div {
+  font-size: $font-size;
+  color: $color;
+}
+
+// 가져오기 : 다른 scss 파일을 가져오기
+@import "_form";
+@import "_button";
+
+// 중첩 : 가독성
+.card {
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 16px;
+  .card-header {
+    padding: 8px;
+    background-color: lightgray;
+  }
+}
+
+// 확장 : 다른 선택자에 적용된 스타일을 모두 가져오고 싶을때 @extend 문법 사용
+.btn {
+  width: 100px;
+  height: 50px;
+}
+.btn-danger {
+  @extend .btn;
+  background-color: red;
+}
+// + 그룹 선택자 생성
+.btn,
+.btn-danger {
+  width: 100px;
+  height: 50px;
+}
+.btn-danger {
+  background-color: red;
+}
+
+// 재사용
+// @mixin : 재사용하기 위한 스타일 정의
+// @include : 이미 정의된 스타일을 가져와 사용
+
+@mixin bordered() {
+  border: 1px solid #ddd;
+  &:hover {
+    border-color: #999;
+  }
+}
+
+h1 {
+  @include bordered();
+}
+
+@mixin borderd($width: 5px) {
+  border: $width solid #ddd;
+  &:hover {
+    border-color: #999;
+  }
+}
+
+h1 {
+  @include borderd(3px) // 스타일 사용 + 매개변수 값 변경
+;
+}
+
+// 연산
+/*
+calc() 없이도 연산 사용 가능
+처리 단위 : px 및 상대적 단위 ( %, em, vh, vw 등)
+일부 css 속성에서 (/)슬래시 하므로 산술 연산을 할 때는 소괄호로 묶기
+*/
+
+// 조건문
+// @if~@else
+
+$theme: "darkmode";
+body {
+  @if ($theme == "darkmode") {
+    color: white;
+  } @else {
+    color: black;
+  }
+}
+
+// 반복문
+// @for문 + to(종료 값 -1 번 반복), through(종료 값까지 반복) 키워드 조합
+// 변수에는 관례상 $i 사용
+
+// 1부터 4까지
+@for $i from 1 to 5 {
+}
+// 1부터 5까지
+@for $i from 1 through 5 {
+}
+
+@for $i from 1 through 5 {
+  .mt#{$i} {
+    margin-top: $i + px;
+  }
+}
+
+// https://sass-guidelin.es/ko

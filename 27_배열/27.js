@@ -171,3 +171,14 @@ console.log(aee); // [ 1, 3 ]
 
 // length 프로퍼티가 자동 갱신된다.
 console.log(aee.length); // 2
+
+// 41
+const arrrr = [1];
+
+// push 메서드는 원본 배열(arr)을 직접 변경
+arrrr.push(2);
+console.log(arrrr);
+// concat 메서드는 원본 배열(arr)을 직접 변경하지 않고 새로운 배열을 생성하여 반환
+const result = arrrr.concat(3);
+console.log(arrrr);
+console.log(result);
